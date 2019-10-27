@@ -6,24 +6,20 @@ import pandas as pd
 import psycopg2 as pg
 
 ######  Define PostgreSQL connection
-#conn = pg.connect(
-#    database="postgres",
-#    user="postgres",
-#    password="pg_p@ss",
-#    host="localhost",
-#    port="5432")
+conn = pg.connect(
+    database="postgres",
+    user="postgres",
+    password="pg_p@ss",
+    host="localhost",
+    port="5432")
 
 ###### Define DataFrame by reading in data from PostgreSQL
-#df = pd.read_sql_query(
-#    f"""
-#    SELECT article_id, outlet_name, tag_name, provider, provider_value, zip_code
-#    FROM airbus_bhqlite_excerpt
-#    """,
-#    con=conn)
-
-###### Define DataFrame by reading in CSV created from PostgreSQL data
-df = pd.read_csv('airbus_bhqlite_excerpt.csv')
-df = df.drop('Unnamed: 0', axis=1)
+df = pd.read_sql_query(
+    f"""
+    SELECT article_id, outlet_name, tag_name, provider, provider_value, zip_code
+    FROM airbus_bhqlite_excerpt
+    """,
+    con=conn)
 
 ###### Create parent_tag and child_tag columns from tag_name column
 df['parent_tag'] = df['tag_name'].str.split(':').str.get(0)
