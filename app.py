@@ -70,6 +70,8 @@ def getChart(parent, child):
     df_outlet_sharing = df_filtered.groupby(['outlet_name', 'article_id', 'provider'])[['provider_value']].min().reset_index()
     df_outlet_sharing_totals = df_outlet_sharing.groupby('outlet_name')[['provider_value']].sum().reset_index()
     df_outlet_merged = pd.merge(df_outlet_volume, df_outlet_sharing_totals, how='left', on='outlet_name')
+    df_outlet_reach = df_filtered.groupby('outlet_name')[['reach_circulation']].min().reset_index()
+    df_outlet_merged = pd.merge(df_outlet_merged, df_outlet_reach, how='left', on='outlet_name')
     df_outlet_merged = df_outlet_merged.fillna(0)
 
     trace = go.Scatter(
@@ -79,10 +81,11 @@ def getChart(parent, child):
     hoverinfo = 'text+x+y',
     mode = 'markers',
     marker=dict(
-        size=11,
-        color = df_outlet_merged['article_id'], # set color equal to a third variable
-        colorscale="viridis",
-        reversescale=True,
+        size=(df_outlet_merged['reach_circulation']/1000000),
+        color = df_outlet_merged['reach_circulation'], # set color equal to a third variable
+        colorscale="Blues",
+        opacity=0.5,
+        reversescale=False,
         showscale=True
         )
     )
