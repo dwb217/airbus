@@ -50,11 +50,15 @@ app.title=tabtitle
 
 ########### Set up the layout
 app.layout = html.Div(children=[
-    html.H1(title),
+    html.H2(title),
     html.Div('Select Company:'),
-    dcc.Dropdown(id='parent-dropdown', options= [{'label':i, 'value':i} for i in parent_tag_list], value=parent_tag_list[0]),
+    html.Div([html.Div([dcc.Dropdown(id='parent-dropdown', options= [{'label':i, 'value':i} for i in parent_tag_list], value=parent_tag_list[0])], className='three columns')], className='twelve columns'),
+    html.Br(),
+    html.Br(),
     html.Div('Select Topic:'),
-    dcc.Dropdown(id='child-dropdown', options= [{'label':i, 'value':i} for i in child_tag_list], value=child_tag_list[0]),
+    html.Div([html.Div([dcc.Dropdown(id='child-dropdown', options= [{'label':i, 'value':i} for i in child_tag_list], value=child_tag_list[0])], className='three columns')], className='twelve columns'),
+    html.Br(),
+    html.Br(),
     dcc.Graph(id='output-div'),
     html.A('Code on Github', href=githublink),
     ]
@@ -89,8 +93,6 @@ def getChart(parent, child):
         showscale=True
         )
     )
-
-    z = df_outlet_merged['outlet_name']
 
     data = [trace]
     layout = go.Layout(
