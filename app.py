@@ -36,20 +36,20 @@ indexNames = df[(df['provider'] == 'Majestic') |
                 (df['provider'] == 'Facebook:comments')].index
 df.drop(indexNames, inplace=True)
 
-########### Define variables
+##### Define variables
 parent_tag_list=['Airbus', 'Boeing']
 child_tag_list = ['Aircraft Production', 'Corporate', 'Financial Perf.', 'Safety', 'Government Relations', 'Technology']
 title='Aerospace Media Coverage: 2016'
 tabtitle='PublicRelay'
 githublink='https://github.com/aidanjdm/airbus'
 
-########### Initiate the app
+##### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
 
-########### Set up the layout
+##### Set up the layout
 app.layout = html.Div(children=[
     html.H2(title),
     html.Div('Select Company:'),
@@ -75,7 +75,7 @@ app.layout = html.Div(children=[
     ]
 )
 
-############ Callbacks
+###### Define callback
 @app.callback(dash.dependencies.Output('output-div', 'figure'),
                 [dash.dependencies.Input('parent-dropdown', 'value'), dash.dependencies.Input('child-dropdown', 'value')])
 def getChart(parent, child):
@@ -101,7 +101,6 @@ def getChart(parent, child):
             color = df_outlet_merged['reach_circulation'],
             colorscale="Blues",
             opacity=0.5,
-            #reversescale=False,
             showscale=True
             )
         )
@@ -116,5 +115,6 @@ def getChart(parent, child):
     fig = go.Figure(data=data, layout=layout)
     return fig
 
+##### Deploy the app
 if __name__ == '__main__':
     app.run_server()
