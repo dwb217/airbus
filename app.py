@@ -107,7 +107,7 @@ def getChart(parent, child):
 
     data = [trace]
     layout = go.Layout(
-        title = f'Outlets covering {parent} {child} by Article Volume and Social Sharing',
+        title = f'Outlets covering {parent} {child} by Article Volume, Social Sharing, and Reach',
         xaxis = dict(title = 'Article Volume'),
         yaxis = dict(title = 'Social Shares'),
         hovermode = 'closest'
